@@ -378,6 +378,8 @@ func New(options LC.Tun, tunnel C.Tunnel, additions ...inbound.Addition) (l *Lis
 		}
 	}
 
+	log.Infoln("[TUN] route-exclude: inet4=%v inet6=%v autoRoute=%v", inet4RouteExcludeAddress, inet6RouteExcludeAddress, options.AutoRoute)
+
 	tunOptions := tun.Options{
 		Name:                                  tunName,
 		MTU:                                   tunMTU,
