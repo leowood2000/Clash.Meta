@@ -378,7 +378,6 @@ func New(options LC.Tun, tunnel C.Tunnel, additions ...inbound.Addition) (l *Lis
 		}
 	}
 
-	log.Infoln("[TUN] route-exclude: inet4=%v inet6=%v autoRoute=%v", inet4RouteExcludeAddress, inet6RouteExcludeAddress, options.AutoRoute)
 
 	tunOptions := tun.Options{
 		Name:                                  tunName,
@@ -414,16 +413,6 @@ func New(options LC.Tun, tunnel C.Tunnel, additions ...inbound.Addition) (l *Lis
 		InterfaceMonitor:                      defaultInterfaceMonitor,
 		EXP_RecvMsgX:                          options.RecvMsgX,
 		EXP_SendMsgX:                          options.SendMsgX,
-	}
-
-	// Diagnostic: verify BuildAutoRouteRanges output
-	if routeRanges, err := tunOptions.BuildAutoRouteRanges(false); err != nil {
-		log.Errorln("[TUN] BuildAutoRouteRanges error: %v", err)
-	} else {
-		log.Infoln("[TUN] auto-route-ranges count=%d", len(routeRanges))
-		if len(routeRanges) > 0 {
-			log.Infoln("[TUN] auto-route-ranges first=%s last=%s", routeRanges[0].String(), routeRanges[len(routeRanges)-1].String())
-		}
 	}
 
 	if options.AutoRedirect {
